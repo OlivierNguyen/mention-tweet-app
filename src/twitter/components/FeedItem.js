@@ -19,6 +19,7 @@ type Props = {
 };
 
 export default class FeedItem extends Component<Props> {
+
     render() {
         const { created_at, text, user } = this.props.data;
 
