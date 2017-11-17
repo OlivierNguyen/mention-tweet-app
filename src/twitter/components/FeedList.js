@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import FeedItem from './FeedItem';
 
 type Props = {
     data: Array<{
@@ -18,6 +19,16 @@ type Props = {
 
 export default class FeedList extends Component<Props> {
     render() {
-        return <div>FeedList</div>;
+        const S = {
+            container: {},
+        };
+
+        return (
+            <div style={S.container}>
+                {this.props.data.map(tweetInfo => (
+                    <FeedItem key={tweetInfo.id} data={tweetInfo} />
+                ))}
+            </div>
+        );
     }
 }
