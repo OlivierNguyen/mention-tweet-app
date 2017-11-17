@@ -52,7 +52,7 @@ export default class FeedItem extends Component<Props> {
                 right: 0,
                 top: 0,
                 fontSize: 12,
-                padding: 5,
+                padding: 10,
             },
         };
 
