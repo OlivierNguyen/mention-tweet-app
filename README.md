@@ -1,5 +1,4 @@
 ## Mention Tweet App
----
 
 Written in React + Flow
 
