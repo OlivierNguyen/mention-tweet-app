@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import TweenMax from 'gsap';
+import Radium from 'radium';
 import ProfileIcon from './ProfileIcon';
 
 type Props = {
@@ -20,7 +21,7 @@ type Props = {
     onClick?: Function,
 };
 
-export default class FeedItem extends Component<Props> {
+class FeedItem extends Component<Props> {
     refFeedItem: ?HTMLDivElement;
 
     constructor(props: Object) {
@@ -30,7 +31,7 @@ export default class FeedItem extends Component<Props> {
     componentWillReceiveProps(nextProps: Object) {
         TweenMax.to(this.refFeedItem, 0.5, {
             scale: nextProps.open ? 1.5 : 1,
-            zIndex: nextProps.open ? 200: 100,
+            zIndex: nextProps.open ? 200 : 100,
         });
     }
 
@@ -46,6 +47,9 @@ export default class FeedItem extends Component<Props> {
                 border: 'solid 1px #ededed',
                 zIndex: 100,
                 backgroundColor: '#fff',
+                ':hover': {
+                    backgroundColor: '#fafafa',
+                }
             },
             leftContainer: {},
             rightContainer: {
@@ -80,6 +84,7 @@ export default class FeedItem extends Component<Props> {
 
         return (
             <div
+                title="Click to extend"
                 style={S.container}
                 onClick={() => this.props.onClick && this.props.onClick(id)}
                 ref={ref => (this.refFeedItem = ref)}
@@ -97,3 +102,5 @@ export default class FeedItem extends Component<Props> {
         );
     }
 }
+
+export default Radium(FeedItem);

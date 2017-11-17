@@ -19,7 +19,7 @@ export default class Layout extends Component {
             logo: {
                 width: 300,
                 padding: 20,
-                position: 'absolute',
+                position: 'fixed',
                 top: 0,
                 left: 0,
             },
