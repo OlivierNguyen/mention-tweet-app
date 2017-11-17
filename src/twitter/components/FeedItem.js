@@ -47,6 +47,7 @@ export default class FeedItem extends Component<Props> {
                 color: '#6b6b6b',
             },
             date: {
+                color: '#588dca',
                 position: 'absolute',
                 right: 0,
                 top: 0,
