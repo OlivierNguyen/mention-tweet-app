@@ -18,7 +18,7 @@ import { map, pick } from 'ramda';
  *          screen_name: "React_Nodejs",
  *          description: "#react #redux #reactjs #node #nodejs",
  *          profile_image_url: "http://pbs.twimg.com/profile_images/856732614077456384/zA6ENalK_normal.jpg"
- *          }
+ *      }
  *  }
  */
 export const extractTwitterStatuses = data => {
