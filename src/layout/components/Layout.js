@@ -29,9 +29,10 @@ export default class Layout extends Component {
                 borderRadius: 5,
             },
             containerFooter: {
-                position: 'absolute',
+                position: 'fixed',
                 bottom: 0,
-                paddingLeft: 20,
+                right: 0,
+                paddingRight: 20,
                 paddingBottom: 10,
             },
         };

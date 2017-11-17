@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import moment from 'moment';
+import TweenMax from 'gsap';
 import ProfileIcon from './ProfileIcon';
 
 type Props = {
@@ -16,19 +17,35 @@ type Props = {
             profile_image_url: string,
         },
     },
+    onClick?: Function,
 };
 
 export default class FeedItem extends Component<Props> {
+    refFeedItem: ?HTMLDivElement;
+
+    constructor(props: Object) {
+        super(props);
+    }
+
+    componentWillReceiveProps(nextProps: Object) {
+        TweenMax.to(this.refFeedItem, 0.5, {
+            scale: nextProps.open ? 1.5 : 1,
+            zIndex: nextProps.open ? 200: 100,
+        });
+    }
 
     render() {
-        const { created_at, text, user } = this.props.data;
+        const { created_at, text, user, id } = this.props.data;
 
         const S = {
             container: {
+                cursor: 'pointer',
                 display: 'flex',
                 position: 'relative',
                 padding: 15,
                 border: 'solid 1px #ededed',
+                zIndex: 100,
+                backgroundColor: '#fff',
             },
             leftContainer: {},
             rightContainer: {
@@ -62,7 +79,11 @@ export default class FeedItem extends Component<Props> {
             .humanize();
 
         return (
-            <div style={S.container}>
+            <div
+                style={S.container}
+                onClick={() => this.props.onClick && this.props.onClick(id)}
+                ref={ref => (this.refFeedItem = ref)}
+            >
                 <div style={S.date}>{dateTweet}</div>
                 <div style={S.leftContainer}>
                     <ProfileIcon imageUrl={user.profile_image_url} />

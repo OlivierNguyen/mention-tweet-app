@@ -17,13 +17,31 @@ type Props = {
     }>,
 };
 
-export default class FeedList extends Component<Props> {
+type State = {
+    idFeedItemToOpen: number | null,
+};
+
+export default class FeedList extends Component<Props, State> {
+    toggleAnimation: Function;
+
+    constructor(props: Object) {
+        super(props);
+        this.state = {
+            idFeedItemToOpen: null,
+        };
+        this.toggleAnimation = this.toggleAnimation.bind(this);
+    }
+
+    toggleAnimation(id: number) {
+        const shouldClose = this.state.idFeedItemToOpen === id;
+        this.setState({ idFeedItemToOpen: shouldClose ? null : id });
+    }
+
     render() {
         const S = {
             container: {
                 width: 450,
                 height: 550,
-                overflowY: 'scroll',
                 backgroundColor: '#fff',
                 borderRadius: 5,
                 boxShadow:
@@ -35,7 +53,10 @@ export default class FeedList extends Component<Props> {
             <div style={S.container}>
                 {this.props.data.map(tweetInfo => (
                     <FeedItem
-                        key={tweetInfo.id} data={tweetInfo}
+                        onClick={this.toggleAnimation}
+                        open={this.state.idFeedItemToOpen === tweetInfo.id}
+                        key={tweetInfo.id}
+                        data={tweetInfo}
                     />
                 ))}
             </div>
