@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import moment from 'moment';
+import ProfileIcon from './ProfileIcon';
 
 type Props = {
     data: {
@@ -26,10 +27,9 @@ export default class FeedItem extends Component<Props> {
                 display: 'flex',
                 position: 'relative',
                 padding: 15,
-                border: 'solid 1px #ededed'
+                border: 'solid 1px #ededed',
             },
             leftContainer: {},
-            profile: {},
             rightContainer: {
                 marginLeft: 10,
                 display: 'flex',
@@ -63,11 +63,7 @@ export default class FeedItem extends Component<Props> {
             <div style={S.container}>
                 <div style={S.date}>{dateTweet}</div>
                 <div style={S.leftContainer}>
-                    <img
-                        style={S.profile}
-                        src={user.profile_image_url}
-                        alt="profil"
-                    />
+                    <ProfileIcon imageUrl={user.profile_image_url} />
                 </div>
                 <div style={S.rightContainer}>
                     <div style={S.screenName}>{`@${user.screen_name}`}</div>
