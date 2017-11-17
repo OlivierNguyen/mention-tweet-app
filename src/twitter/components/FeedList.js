@@ -1,4 +1,4 @@
-import R, { Component } from 'react';
+import React, { Component } from 'react';
 
 export default class FeedList extends Component {
     render() {
