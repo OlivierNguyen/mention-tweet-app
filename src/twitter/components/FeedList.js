@@ -41,9 +41,9 @@ export default class FeedList extends Component<Props, State> {
         const S = {
             container: {
                 width: 450,
-                height: 550,
                 backgroundColor: '#fff',
                 borderRadius: 5,
+                marginBottom: 20,
                 boxShadow:
                     'rgba(0, 0, 0, 0.19) 0px 10px 30px, rgba(0, 0, 0, 0.23) 0px 6px 10px',
             },
