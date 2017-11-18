@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Radium from 'radium';
 import FeedList from '../../twitter/components/FeedList';
 import Footer from './Footer';
 import { extractTwitterStatuses } from '../../utils/utils';
 import { MOCK_TWITTER_API_SEARCH_REACTJS } from '../../mock';
 
-export default class Layout extends Component {
+class Layout extends Component {
     static defaultProps = {
         data: extractTwitterStatuses(MOCK_TWITTER_API_SEARCH_REACTJS),
     };
@@ -22,6 +23,10 @@ export default class Layout extends Component {
                 position: 'fixed',
                 top: 0,
                 left: 0,
+                '@media (max-width: 500px)': {
+                    width: 100,
+                    padding: 5,
+                },
             },
             containerFeed: {
                 marginTop: 40,
@@ -53,3 +58,5 @@ export default class Layout extends Component {
         );
     }
 }
+
+export default Radium(Layout);

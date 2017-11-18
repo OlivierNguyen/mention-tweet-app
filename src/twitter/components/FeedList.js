@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import FeedItem from './FeedItem';
+import Radium from 'radium';
 
 type Props = {
     data: Array<{
@@ -21,7 +22,7 @@ type State = {
     idFeedItemToOpen: number | null,
 };
 
-export default class FeedList extends Component<Props, State> {
+class FeedList extends Component<Props, State> {
     toggleAnimation: Function;
 
     constructor(props: Object) {
@@ -46,6 +47,10 @@ export default class FeedList extends Component<Props, State> {
                 marginBottom: 40,
                 boxShadow:
                     'rgba(0, 0, 0, 0.19) 0px 10px 30px, rgba(0, 0, 0, 0.23) 0px 6px 10px',
+                '@media (max-width: 500px)': {
+                    width: 250,
+                    marginBottom: 50,
+                },
             },
         };
 
@@ -63,3 +68,5 @@ export default class FeedList extends Component<Props, State> {
         );
     }
 }
+
+export default Radium(FeedList);
