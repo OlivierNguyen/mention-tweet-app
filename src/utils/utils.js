@@ -28,7 +28,6 @@ import { map } from 'ramda';
  *  }]
  */
 export const formatMentionsData = mentions => {
-    console.log('mentions', mentions);
     return map(status => {
         const author_influence = status.author_influence;
         return {
