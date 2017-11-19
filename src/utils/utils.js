@@ -1,42 +1,47 @@
-import { map, pick } from 'ramda';
+import { map } from 'ramda';
 
 /**
- * Extract only some keys of the tweet object
- * Input = {
- *   created_at: 'Fri Nov 17 17:54:48 +0000 2017',
- *   id: 931581399676567552,
- *   ...
- * }
+ * Extract only some keys of the mention object
+ * Input = [{
+ *      id: "124875846568",
+ *      alert_id: 1214654,
+ *      title: "RT @aravosis: Now that you mention it, ...",
+ *      description: "...",
+ *      description_medium: "...",
+ *      ...
+ *      twitter_real_name :"Cynthia Lessick",
+ *      unique_id: "twitter:post/925582859989069824",
+ *      updated_at: "2017-11-01T04:42:07.0+00:00"
+ *      }]
  *
- * Output = {
- *      id:931584639709384700,
- *      created_at: "Fri Nov 17 18:07:40 +0000 2017",
- *      text: "Learn Swift 4 &amp; iOS 11 the Fun Way - Swift Playgrounds App\n☞ https://t.co/an10v8X6LI\n#react #reactjs #node #nodejs… https://t.co/Lzl8PxKTnT",
+ * Output = [{
+ *      id: 124875846568,
+ *      created_at: "...",
+ *      text: "...",
  *      user: {
  *          id: 856731149611053000,
- *          name: "React & Nodejs",
- *          screen_name: "React_Nodejs",
- *          description: "#react #redux #reactjs #node #nodejs",
+ *          name: "Cynthia Lessick",
+ *          screen_name: "casl45",
+ *          description: "...",
  *          profile_image_url: "http://pbs.twimg.com/profile_images/856732614077456384/zA6ENalK_normal.jpg"
  *      }
- *  }
+ *  }]
  */
-export const extractTwitterStatuses = data => {
-    const statuses = data.statuses;
-
+export const formatMentionsData = mentions => {
+    console.log('mentions', mentions);
     return map(status => {
-        const minStatusInfo = pick(
-            ['id', 'created_at', 'text', 'user'],
-            status
-        );
-        const minUserInfo = pick(
-            ['id', 'name', 'screen_name', 'description', 'profile_image_url'],
-            status.user
-        );
-
+        const author_influence = status.author_influence;
         return {
-            ...minStatusInfo,
-            user: minUserInfo,
+            id: status.id,
+            created_at: status.created_at,
+            text: status.description,
+            user: {
+                id: author_influence.id,
+                name: author_influence.realname,
+                screen_name: author_influence.name,
+                description: author_influence,
+                profile_image_url: author_influence.picture,
+            },
         };
-    })(statuses);
+    })(mentions);
 };

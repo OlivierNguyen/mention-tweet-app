@@ -2,13 +2,35 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import FeedList from '../../twitter/components/FeedList';
 import Footer from './Footer';
-import { extractTwitterStatuses } from '../../utils/utils';
-import { MOCK_TWITTER_API_SEARCH_REACTJS } from '../../mock';
+import { formatMentionsData } from '../../utils/utils';
+import { MentionCaller } from '../../utils/dataController';
+import { SETTINGS } from '../../settings';
+
+const fetchDataPromise = () => {
+    return MentionCaller.callPromise(
+        'GET',
+        `/api/accounts/${SETTINGS.MENTION_ACCOUNT_ID}/alerts/${SETTINGS.MENTION_ALERT_ID}/mentions`,
+        {}
+    );
+};
 
 class Layout extends Component {
-    static defaultProps = {
-        data: extractTwitterStatuses(MOCK_TWITTER_API_SEARCH_REACTJS),
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            isLoading: true,
+        };
+    }
+
+    componentDidMount() {
+        fetchDataPromise().then(res => {
+            this.setState({
+                data: formatMentionsData(res.data.mentions),
+                isLoading: false,
+            });
+        });
+    }
 
     render() {
         const S = {
@@ -49,7 +71,7 @@ class Layout extends Component {
                     alt="Mention"
                 />
                 <div style={S.containerFeed}>
-                    <FeedList data={this.props.data} />
+                    <FeedList data={this.state.data} />
                 </div>
                 <div style={S.containerFooter}>
                     <Footer />
