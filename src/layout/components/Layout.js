@@ -80,6 +80,8 @@ class Layout extends Component<Props, State> {
                 },
             },
             containerFeed: {
+                display: 'flex',
+                justifyContent: 'center',
                 marginTop: 40,
                 zIndex: 10,
                 borderRadius: 5,
@@ -93,7 +95,6 @@ class Layout extends Component<Props, State> {
             },
             loader: {
                 position: 'fixed',
-                left: '50%',
                 top: '50%',
             },
         };
