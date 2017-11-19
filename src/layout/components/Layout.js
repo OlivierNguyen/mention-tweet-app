@@ -1,11 +1,18 @@
+// @flow
 import React, { Component } from 'react';
 import Radium from 'radium';
+import TweenMax from 'gsap';
 import FeedList from '../../twitter/components/FeedList';
 import Footer from './Footer';
+import Loader from './Loader';
 import { formatMentionsData } from '../../utils/utils';
 import { MentionCaller } from '../../utils/dataController';
 import { SETTINGS } from '../../settings';
 
+/**
+ * Fetch data from Mention API
+ * @returns Promise
+ */
 const fetchDataPromise = () => {
     return MentionCaller.callPromise(
         'GET',
@@ -14,7 +21,16 @@ const fetchDataPromise = () => {
     );
 };
 
-class Layout extends Component {
+type Props = {};
+
+type State = {
+    data: Array<?Object>,
+    isLoading: boolean,
+};
+
+class Layout extends Component<Props, State> {
+    feedListContainer: ?HTMLDivElement;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,11 +40,24 @@ class Layout extends Component {
     }
 
     componentDidMount() {
+        // Init opacity of the feedlist to 0 for animation
+        TweenMax.set(this.feedListContainer, { opacity: 0 });
+
         fetchDataPromise().then(res => {
-            this.setState({
-                data: formatMentionsData(res.data.mentions),
-                isLoading: false,
-            });
+            this.setState(
+                {
+                    data: formatMentionsData(res.data.mentions),
+                    isLoading: false,
+                },
+                () =>
+                    setTimeout(
+                        () =>
+                            TweenMax.to(this.feedListContainer, 1, {
+                                opacity: 1,
+                            }),
+                        500
+                    )
+            );
         });
     }
 
@@ -62,6 +91,11 @@ class Layout extends Component {
                 paddingRight: 20,
                 paddingBottom: 10,
             },
+            loader: {
+                position: 'fixed',
+                left: '50%',
+                top: '50%',
+            },
         };
         return (
             <div style={S.container}>
@@ -71,7 +105,15 @@ class Layout extends Component {
                     alt="Mention"
                 />
                 <div style={S.containerFeed}>
-                    <FeedList data={this.state.data} />
+                    <div style={S.loader}>
+                        <Loader
+                            show={this.state.isLoading}
+                            text={'Data is loading...'}
+                        />
+                    </div>
+                    <div ref={ref => (this.feedListContainer = ref)}>
+                        <FeedList data={this.state.data} />
+                    </div>
                 </div>
                 <div style={S.containerFooter}>
                     <Footer />

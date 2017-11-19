@@ -24,10 +24,6 @@ type Props = {
 class FeedItem extends Component<Props> {
     refFeedItem: ?HTMLDivElement;
 
-    constructor(props: Object) {
-        super(props);
-    }
-
     componentWillReceiveProps(nextProps: Object) {
         TweenMax.to(this.refFeedItem, 0.5, {
             scale: nextProps.open ? 1.5 : 1,
